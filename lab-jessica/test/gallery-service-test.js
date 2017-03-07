@@ -34,13 +34,7 @@ describe('Gallery Service', function() {
       };
 
       this.$httpBackend.expectPOST('http://localhost:8000/api/gallery', galleryData, headers)
-      .respond(200, {
-        _id: '1234',
-        username: 'jessicauser',
-        name: galleryData.name,
-        desc: galleryData.desc,
-        pics: []
-      });
+      .respond(200);
 
       this.galleryService.createGallery(galleryData);
       this.$httpBackend.flush();
@@ -94,6 +88,7 @@ describe('Gallery Service', function() {
         'Authorization': `Bearer ${this.testToken}`,
         'Accept': 'application/json, text/plain, */*'
       };
+
       this.$httpBackend.expectDELETE(`http://localhost:8000/api/gallery/${galleryID}`, headers)
       .respond(204);
 
