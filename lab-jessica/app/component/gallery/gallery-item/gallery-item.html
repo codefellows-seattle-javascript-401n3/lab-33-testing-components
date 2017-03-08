@@ -1,4 +1,4 @@
-<li class="gallery-item">
+<li class="gallery-item component">
   <div class="current-item" ng-if="!galleryItemCtrl.showEditGallery">
     <div>
       <span class="item-label">name:</span>
@@ -13,6 +13,6 @@
 
   <edit-gallery ng-if="galleryItemCtrl.showEditGallery" gallery="galleryItemCtrl.gallery"></edit-gallery>
 
-  <button ng-click="galleryItemCtrl.showEditGallery=!galleryItemCtrl.showEditGallery" type="button" name="edit">edit</button>
-  <button ng-click="galleryItemCtrl.deleteGallery()" type="button" name="delete">delete</button>
+  <button class="btn-std" ng-click="galleryItemCtrl.showEditGallery=!galleryItemCtrl.showEditGallery" type="button" name="edit">edit</button>
+  <button class="btn-std" ng-click="galleryItemCtrl.deleteGallery()" type="button" name="delete">delete</button>
 </li>
