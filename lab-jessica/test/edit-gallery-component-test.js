@@ -29,6 +29,9 @@ describe('Edit Gallery Component', function() {
     };
 
     let editGalleryCtrl = this.$componentController('editGallery', null, mockBindings);
+    //none of this makes sense to me. I can change gallery to anything i want and this will still work.
+    //I can even delete the bindings in edit-gallery and this still works.
+    expect(editGalleryCtrl.gallery).toBeDefined();
     expect(editGalleryCtrl.gallery.name).toEqual(mockBindings.gallery.name);
     expect(editGalleryCtrl.gallery.desc).toEqual(mockBindings.gallery.desc);
 
@@ -56,26 +59,22 @@ describe('Edit Gallery Component', function() {
       let mockBindings = {
         gallery: {
           _id: '12345',
-          name: 'updated name',
-          desc: 'updated description'
+          name: 'name',
+          desc: 'description'
         },
       };
 
       let editGalleryCtrl = this.$componentController('editGallery', null, mockBindings);
-      // editGalleryCtrl.gallery.name = 'updated name';
-      // editGalleryCtrl.gallery.desc = 'updated description';
+      expect(editGalleryCtrl.gallery.name).toEqual(mockBindings.gallery.name);
+      expect(editGalleryCtrl.gallery.desc).toEqual(mockBindings.gallery.desc);
+
+      editGalleryCtrl.gallery.name = 'updated name';
+      editGalleryCtrl.gallery.desc = 'updated description';
+
       editGalleryCtrl.updateGallery();
 
       this.$httpBackend.flush();
       this.$rootScope.$apply();
     });
   });
-
-
-
-
-
-
-
-
 });
