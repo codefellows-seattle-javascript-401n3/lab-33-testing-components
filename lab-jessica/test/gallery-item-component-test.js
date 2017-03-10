@@ -20,6 +20,7 @@ describe('Gallery Item Component', function(){
     };
 
     let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
+    expect(galleryItemCtrl.gallery).toBeDefined();
     expect(galleryItemCtrl.gallery.name).toEqual(mockBindings.gallery.name);
     expect(galleryItemCtrl.gallery.desc).toEqual(mockBindings.gallery.desc);
 
@@ -28,14 +29,8 @@ describe('Gallery Item Component', function(){
 
   describe('initial properties', () => {
     it('showEditGallery property should be false', () => {
-      let mockBindings = {
-        gallery: {
-          name: 'test gallery name',
-          desc: 'test gallery description'
-        }
-      };
 
-      let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
+      let galleryItemCtrl = this.$componentController('galleryItem');
       expect(galleryItemCtrl.showEditGallery).toEqual(false);
 
       this.$rootScope.$apply();
@@ -43,51 +38,24 @@ describe('Gallery Item Component', function(){
   });
 
   describe('galleryItemCtrl.deleteGallery()', () => {
-    // it('should call deleteGallery', () => {
-    //   let mockBindings = {
-    //     gallery: {
-    //       _id: '12345',
-    //       name: 'test name',
-    //       desc: 'test description',
-    //       pics: [],
-    //     },
-    //     deleteGallery: function(data){
-    //       expect(data.galleryData._id).toEqual('12345');
-    //     }
-    //   };
-    //
-    //   let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
-    //   galleryItemCtrl.deleteDone({galleryData: galleryItemCtrl.gallery});
-    //
-    //   this.$rootScope.$apply();
-    // });
-    // });
-  //
-  // it('should call deleteDone with gallery after galleryDelete', () => {
-  //   let url = 'http://localhost:8000/api/gallery/12345';
-  //   let headers = {
-  //     Authorization: 'Bearer test token',
-  //     Accept: 'application/json, text/plain, */*'
-  //   };
-  //
-  //   let mockBindings = {
-  //     gallery: {
-  //       _id: '12345',
-  //       name: 'test name',
-  //       desc: 'test description',
-  //       pics: []
-  //     },
-  //     deleteDone: function(data){
-  //       expect(data.galleryData._id).toEqual(mockBindings.gallery._id);
-  //     }
-  //   };
-  //
-  //   this.$httpBackend.expectDELETE(url, headers).respond(204);
-  //
-  //   let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
-  //   galleryItemCtrl.deleteGallery();
-  //
-  //   this.$httpBackend.flush();
-  //   this.$rootScope.$apply();
+    it('should call deleteGallery', () => {
+      let mockBindings = {
+        gallery: {
+          _id: '12345',
+          name: 'test name',
+          desc: 'test description',
+          pics: [],
+        },
+
+        deleteGallery: function(id) {
+          expect(id).toEqual('12345');
+        }
+      };
+
+      let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
+      galleryItemCtrl.deleteGallery(galleryItemCtrl.gallery._id);
+
+      this.$rootScope.$apply();
+    });
   });
 });
