@@ -1,6 +1,6 @@
 'use strict';
-describe('Edit Gallery Component', function(){
 
+describe('Gallery Item Component', function(){
   beforeEach(() => {
     angular.mock.module('cfgram');
     angular.mock.inject(($rootScope, $componentController, $httpBackend, authService) => {
@@ -10,20 +10,73 @@ describe('Edit Gallery Component', function(){
       this.authService = authService;
     })
   });
-  it('should contain the proper component bindings', () => {
-  let mockBindings = {
-    gallery: {
-      name: 'test gallery name',
-      desc: 'test gallery description'
-    }
-  };
 
-  // describe('testing typeof, which should be an object', function() {
-  //   it('should be an object', () => {
-  //     let galleryItemCtrl = this.$componentController('editGallery', null, mockBindings);
-  //     expect(typeof galleryItemCtrl).toEqual(null);
-  //   });
-  // });
+  describe('galleryItemCtrl.deleteDone()', () => {
+    it('should call deleteDone', () => {
+      let mockBindings = {
+        gallery: {
+          _id: '12345',
+          name: 'test name',
+          desc: 'test description',
+          pics: [],
+        },
+        deleteDone: function(data){
+          expect(data.galleryData._id).toEqual('12345');
+        }
+      };
 
-});
+      let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
+      galleryItemCtrl.deleteDone({galleryData: galleryItemCtrl.gallery});
+
+      this.$rootScope.$apply();
+    });
+  });
+
+  it('should call deleteDone with gallery after galleryDelete', () => {
+    let url = 'http://localhost:3000/api/gallery/12345';
+    let headers = {
+      Authorization: 'Bearer test token',
+      Accept: 'application/json, text/plain, */*'
+    };
+
+    let mockBindings = {
+      gallery: {
+        _id: '12345',
+        name: 'test name',
+        desc: 'test description',
+        pics: []
+      },
+      deleteDone: function(data){
+        expect(data.galleryData._id).toEqual(mockBindings.gallery._id);
+
+      }
+    };
+
+    this.$httpBackend.expectDELETE(url, headers).respond(204);
+
+    let galleryItemCtrl = this.$componentController('galleryItem', null, mockBindings);
+    galleryItemCtrl.deleteGallery();
+
+    this.$httpBackend.flush();
+    this.$rootScope.$apply();
+  });
+
+
+
+  describe('testing typeof galleryItemCtrl()', () => {
+    it('should be an object', () => {
+      let galleryItemCtrl = this.$componentController('galleryItem', null);
+      expect(typeof galleryItemCtrl).toEqual('object');
+    });
+  });
+
+  describe('testing typeof galleryItemCtrl.deleteGallery()', () => {
+    it('should be an function', () => {
+      let galleryItemCtrl = this.$componentController('galleryItem', null);
+      expect(typeof galleryItemCtrl.deleteGallery).toEqual('function');
+    });
+  });
+
+
+
 });
