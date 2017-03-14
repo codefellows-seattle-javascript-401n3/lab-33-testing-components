@@ -71,12 +71,19 @@ describe('Gallery Item Component', function(){
   });
 
   describe('testing typeof galleryItemCtrl.deleteGallery()', () => {
-    it('should be an function', () => {
+    it('should be a function', () => {
       let galleryItemCtrl = this.$componentController('galleryItem', null);
       expect(typeof galleryItemCtrl.deleteGallery).toEqual('function');
+      expect(galleryItemCtrl.showEditGallery).toEqual(false);
     });
   });
 
+  describe('testing typeof galleryItemCtrl.deleteGallery()', () => {
+    it('should be a function', () => {
+      let galleryItemCtrl = this.$componentController('galleryItem', null);
+      expect(galleryItemCtrl.showEditGallery).toEqual(false);
+    });
+  });
 
 
 });
